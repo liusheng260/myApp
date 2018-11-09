@@ -1,0 +1,15 @@
+<html>
+<body>
+<h3>注册页面</h3>
+<form action="/register/" method="POST">
+    {% csrf_token %}
+    <p>
+        用户名：<input type='text' name="username" autofocus='autofocus' />
+    </p>
+    <p>
+        密码：<input type='text' name="password" />
+    </p>
+    <input type="submit" value="注册" />
+</form>
+</body>
+</html>
