@@ -23,7 +23,7 @@ urlpatterns = [
     #url(r'^$', learn_views.index),
     #path('admin/', admin.site.urls),
     url(r'^admin/', admin.site.urls),
-    #url(r'^add/$', learn_views.add),
+    url(r'^add/$', learn_views.add),
     url(r'^login/$', learn_views.login),
     url(r'^index/$', learn_views.index),
     url(r'^register/$', learn_views.register),

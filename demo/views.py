@@ -70,3 +70,6 @@ def login(request):
             return HttpResponse(t.render({'status':'ERROR Incorrect username or password'}))
     return HttpResponse(t.render())
 
+def add(request):
+    t = loader.get_template("add.html")
+    return HttpResponse(t.render())
