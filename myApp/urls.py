@@ -27,4 +27,5 @@ urlpatterns = [
     url(r'^login/$', learn_views.login),
     url(r'^index/$', learn_views.index),
     url(r'^register/$', learn_views.register),
+    url(r'^about/$', learn_views.about),
 ]
