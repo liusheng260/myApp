@@ -28,4 +28,6 @@ urlpatterns = [
     url(r'^index/$', learn_views.index),
     url(r'^register/$', learn_views.register),
     url(r'^about/$', learn_views.about),
+    url(r'^myblog/$',learn_views.myblog),
+    url(r'^myviews/$',learn_views.myviews),
 ]

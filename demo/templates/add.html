@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block sm9 %}
+<form method="POST">
+    <div class="form-group">
+        <label for="formGroupExampleInput" style="color:rgb(6, 151, 248);font-size:20px;font-family:fantasy">新增博客</label>
+        <input style = 'width:200px' type="text" class="form-control" name="title" placeholder="输入标题">
+    </div>
+    <div class="form-group">
+        {% comment %} <label for="exampleFormControlTextarea1">正文</label> {% endcomment %}
+        <textarea style = 'width:1000px' class="form-control" name="body" rows="3" placeholder="输入正文"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">提交</button>
+</form>
+
+{% endblock sm9 %}

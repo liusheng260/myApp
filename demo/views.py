@@ -4,7 +4,8 @@ from django.shortcuts import render,redirect
 # coding:utf-8
 from django.http import HttpResponse
 from django.template import loader,Context
-from .models import Vip
+from .models import *
+# from .models import Article
 from django import forms
 from functools import wraps
 #说明：这个装饰器的作用，就是在每个函数视图被调用时，都验证下有没有登录
@@ -100,7 +101,7 @@ def index(request):
     #t = loader.get_template("index.html")
     Vip_username1 = request.session.get('Vip_username')
     userobj=Vip.objects.filter(username=Vip_username1)
-    # v1 = Vip.objects.all()
+    # v1 = Article.objects.reverse()[0]
     # html = t.render({"v1":v1})
     # return HttpResponse(html)
     print(userobj)
@@ -118,8 +119,14 @@ def logout(request):
     return HttpResponse(render(request,'login.html'))
 
 def add(request):
-    t = loader.get_template("add.html")
-    return HttpResponse(t.render())
+    if request.method=="POST":
+        title = request.POST.get('title')
+        body = request.POST.get('body')
+        # autho = request.POST.get('us')
+        blogAdd = Article.objects.create(title=title,body=body,autho='ss01',slug='1')
+        return HttpResponse(render(request,'myblog.html'))
+    else:
+        return HttpResponse(render(request,'add.html'))
 
 @check_login
 def about(request):
@@ -130,3 +137,29 @@ def about(request):
         return render(request,'about.html',{"users":userobj[0]})
     else:
         return render(request,'about.html',{'users':'匿名用户'})
+
+@check_login
+def myblog(request):
+    Vip_username1 = request.session.get('Vip_username')
+    userobj=Vip.objects.filter(username=Vip_username1)
+    blog_title = Article.objects.all()
+    print(userobj)
+    print(blog_title)
+    if userobj:
+        return render(request,'myblog.html',{"users":userobj[0],'tt':blog_title})
+    else:
+        return render(request,'myblog.html',{'users':'匿名用户','tt':blog_title})
+
+@check_login
+def myviews(request):
+    Vip_username1 = request.session.get('Vip_username')
+    userobj=Vip.objects.filter(username=Vip_username1)
+    blog_title = Article.objects.values('title')
+    blog_body = Article.objects.filter(detial = blog_title).values_list('body')
+    print(userobj)
+    if userobj:
+        return render(request,'myviews.html',{"users":userobj[0],'bd':blog_body})
+    else:
+        return render(request,'myviews.html',{'users':'匿名用户','bd':blog_body})
+
+    

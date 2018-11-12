@@ -1,79 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sally的博客</title>
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Sally的博客</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" href="/index/">首页 <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/myblog/">博文</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/message/">留言</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="/about/">关于</a>
-            </li>
-            </ul>
-        </div>
-        {% comment %} {% if check_login %} {% endcomment %}
-        <div>  
-            <a style="color:rgba(255, 255, 255, 0.5)">当前用户：{{ users }}</a>&nbsp;    
-            <a href="/login/" style="color:white">退出</a>
-        </div>
+{% extends "base.html" %}
+<style>
+    .table{
+        width:1000px;
+        font-size:20px;  
+    }
+    .tr{
+        width:400px;
+        background-color:#d0e4fe;      
+    }
+    .th,td{
+        padding: 10px;
+        font-size: 14px;
+    }
+</style>
 
-        {% comment %} {% else %}
-        <div>
-            <a href="/login/" style="color:white">登录</a>&nbsp;<a href="/register/" style="color:white">注册</a>
-        </div>
-        {% endif %} {% endcomment %}
-    </nav>
-    <br>
-    <!-- MAIN -->
-    <div class="row">
-        <div class="col-sm-3">
-            <div class="card" style="width: 20rem;">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">最新文章</li>
-                    <li class="list-group-item">个人分类</li>
-                    <li class="list-group-item">归档</li>
-                    <li class="list-group-item">最新评论</li>
-                </ul>
-            </div>
-        </div>
-        <div class="col-sm-9">
-            <div class="card">
-                <img class="card-img-top" height='200px' src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=4159551931,1288957123&fm=26&gp=0.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" height='200px' src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=66530462,2986836035&fm=26&gp=0.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" height='200px' src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2400242931,3838057578&fm=26&gp=0.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+{% block sm9 %}
+<div class="col-sm-9">
+    <table class="table">
+        <tr class="tr">          
+            <td class="th,td"><a href="/add/" class="addlink">写博客</a></td>
+        </tr>
+        <tr class="tr">
+            <td><a style="color:rgba(10, 5, 5, 0.5)" href="/myviews/" name='tetail'>
+                {% for a in tt%}
+                <li>{{a.title}}</li>
+                {% endfor %}
+            </a></td>  
+        </tr>
+    </table>
+</div>
+
+{% endblock sm9 %}
