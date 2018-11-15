@@ -5,6 +5,9 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.template import loader,Context
 from .models import *
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+import time
 # from .models import Article
 from django import forms
 from functools import wraps
@@ -98,17 +101,13 @@ def login(request):
 
 @check_login
 def index(request):
-    #t = loader.get_template("index.html")
+    art = Article.objects.all().order_by('-lastchange')[:5]
     Vip_username1 = request.session.get('Vip_username')
     userobj=Vip.objects.filter(username=Vip_username1)
-    # v1 = Article.objects.reverse()[0]
-    # html = t.render({"v1":v1})
-    # return HttpResponse(html)
-    print(userobj)
     if userobj:
-        return render(request,'index.html',{"users":userobj[0]})
+        return render(request,'index.html',{"users":userobj[0],"art":art})
     else:
-        return render(request,'index.html',{'users':'匿名用户'})
+        return render(request,'index.html',{'users':'匿名用户',"art":art})
 
 def logout(request):
     try:
@@ -118,15 +117,19 @@ def logout(request):
         pass
     return HttpResponse(render(request,'login.html'))
 
+@check_login
 def add(request):
+    name1=Vip.objects.filter(username=request.session.get('Vip_username'))
+    name = name1[0]
+    print(name)
     if request.method=="POST":
         title = request.POST.get('title')
         body = request.POST.get('body')
-        # autho = request.POST.get('us')
-        blogAdd = Article.objects.create(title=title,body=body,autho='ss01',slug='1')
-        return HttpResponse(render(request,'myblog.html'))
+        category = request.POST.get('category')
+        blogAdd = Article.objects.create(title=title,body=body,category=category,autho=name,slug=time.time())
+        return HttpResponse(render(request,'myblog.html',{"users":name}))
     else:
-        return HttpResponse(render(request,'add.html'))
+        return HttpResponse(render(request,'add.html',{"users":name}))   
 
 @check_login
 def about(request):
@@ -151,15 +154,16 @@ def myblog(request):
         return render(request,'myblog.html',{'users':'匿名用户','tt':blog_title})
 
 @check_login
-def myviews(request):
+def detail(request):
+    art = Article.objects.all().order_by('-lastchange')[:5]
+    id = request.GET.get("id")
     Vip_username1 = request.session.get('Vip_username')
     userobj=Vip.objects.filter(username=Vip_username1)
-    blog_title = Article.objects.values('title')
-    blog_body = Article.objects.filter(detial = blog_title).values_list('body')
-    print(userobj)
+    blog_body = Article.objects.filter(id=id).values()
+    cm = Article.objects.all()
+    # blogAdd = Article.objects.create(title=title,body=body,category=category,autho=name,slug=time.time())
+    body = blog_body[0]
     if userobj:
-        return render(request,'myviews.html',{"users":userobj[0],'bd':blog_body})
+        return render(request,'detail.html',{'users':userobj[0],'bd':body,'art':art})
     else:
-        return render(request,'myviews.html',{'users':'匿名用户','bd':blog_body})
-
-    
+        return render(request,'detail.html',{'users':'匿名用户','bd':body,'art':art})

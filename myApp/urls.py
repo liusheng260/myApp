@@ -29,5 +29,5 @@ urlpatterns = [
     url(r'^register/$', learn_views.register),
     url(r'^about/$', learn_views.about),
     url(r'^myblog/$',learn_views.myblog),
-    url(r'^myviews/$',learn_views.myviews),
+    url(r'^detail/$',learn_views.detail),
 ]

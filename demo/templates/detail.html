@@ -1,18 +1,4 @@
 {% extends "base.html" %}
-<style>
-    .table{
-        width:1000px;
-        font-size:20px;  
-    }
-    .tr{
-        width:400px;
-        background-color:#d0e4fe;      
-    }
-    .th,td{
-        padding: 10px;
-        font-size: 14px;
-    }
-</style>
 {% block left %}
 <div class="col-3">
     <div class="list-group" id="list-tab" role="tablist">
@@ -20,7 +6,7 @@
             <div class="col-2">
             </div>
             <div class="col-12">
-                {% for i in tt %}
+                {% for i in art %}
                 <ul class="list-group list-group-flush">
                     <a class="list-group-item" href="/detail?id={{i.id}}">{{ i.title }}</a>
                 </ul>
@@ -30,11 +16,13 @@
             <div class="col-2">
             </div>
             <div class="col-12">
-                {% for i in tt %}
                 <ul class="list-group list-group-flush">
-                    <a class="list-group-item" href="/detail?id={{i.id}}">{{ i.title }}</a>
+                    <a class="list-group-item">PHP</a>
+                    <a class="list-group-item">JAVA</a>
+                    <a class="list-group-item">Angularjs</a>
+                    <a class="list-group-item">Django</a>
+                    <a class="list-group-item">其他</a>
                 </ul>
-                {% endfor %}
             </div>
         <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">归档</a>
             <div class="col-2">
@@ -61,22 +49,29 @@
                 </ul>
             </div>
     </div>
-</div>
+</div>       
 {% endblock left %}
 {% block sm9 %}
 <div class="col-sm-9">
-    <table class="table">
-        <tr class="tr">          
-            <td class="th,td"><a href="/add/" class="addlink">写博客</a></td>
-        </tr>
-        <tr class="tr">
-            <td>
-                {% for a in tt%}
-                <li><a style="color:rgba(10, 5, 5, 0.5)" href="/detail?id={{a.id}}">{{a.title}}</a></li>              
-                {% endfor %}
-            </td>  
-        </tr>
-    </table>
+    <h3>标题：{{ bd.title }}</h3>
+    <div>作者：{{ bd.autho }}</div>
+    <span>{{ bd.body }}</span>
+    <br>
+    <br>
+    <form action="/detail?id={{bd.id}}" method="POST">
+        <br>
+        <label for="exampleInputEmail1"><h6>评论区</h6></label>
+        {% for  in  %}
+        
+        {% endfor %}
+        <div>
+            
+        </div>
+        <div class="form-group">
+            <textarea style = 'width:1000px' class="form-control" name="comment" rows="3" placeholder="评论"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">提交</button>
+    </form> 
 </div>
 
 {% endblock sm9 %}
